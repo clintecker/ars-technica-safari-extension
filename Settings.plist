@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>DefaultValue</key>
+		<real>30</real>
+		<key>Key</key>
+		<string>refresh_interval</string>
+		<key>Title</key>
+		<string>Refresh Interval</string>
+		<key>Titles</key>
+		<array>
+			<string>1 hour</string>
+			<string>30 min</string>
+			<string>15 min</string>
+			<string>5 min</string>
+		</array>
+		<key>Type</key>
+		<string>PopUpButton</string>
+		<key>Values</key>
+		<array>
+			<real>60</real>
+			<real>30</real>
+			<real>15</real>
+			<real>5</real>
+		</array>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<string>everything</string>
+		<key>Key</key>
+		<string>section</string>
+		<key>Title</key>
+		<string>Section</string>
+		<key>Titles</key>
+		<array>
+			<string>All sections</string>
+			<string>Infinite Loop (Apple)</string>
+			<string>Opposable Thumbs (Gaming)</string>
+			<string>Law &amp; Disorder (Tech Policy)</string>
+			<string>Gadgets</string>
+			<string>One Microsoft Way (Microsoft)</string>
+			<string>Open Ended (Open Source)</string>
+			<string>Business IT</string>
+			<string>Nobel Intent (Science)</string>
+		</array>
+		<key>Type</key>
+		<string>PopUpButton</string>
+		<key>Values</key>
+		<array>
+			<string>everything</string>
+			<string>apple</string>
+			<string>gaming</string>
+			<string>tech-policy</string>
+			<string>gadgets</string>
+			<string>microsoft</string>
+			<string>open-source</string>
+			<string>business</string>
+			<string>science</string>
+		</array>
+	</dict>
+</array>
+</plist>

@@ -1,0 +1,39 @@
+#wrapper, html, body { margin: 0; padding: 0; }
+
+#logo { padding: 3px 5px; width: 23px; }
+
+#refresher { position: absolute; right: 5px; top: 7px; z-index: 999;}
+
+#refresh-link { cursor: pointer; }
+
+#stories { position: absolute; left: 35px; top: 0; width: 1900px; height: 24px;}
+
+#stories .story { float: left; width: 150px; height: 24px; font-size: 0.8em; margin-top: 3px; border-right: 1px solid #888; padding: 0 5px 0 5px; overflow: hidden; text-overflow: ellipsis; -webkit-transition: opacity 1s linear; opacity: 1.0; }
+
+.story.offpage { -webkit-transform: translate3d(0,32px,0); }
+
+@-webkit-keyframes pulse {
+ 0% {
+   opacity: 1.0;
+ }
+ 50% {
+   opacity: 0.4;
+ }
+ 100% {
+   opacity: 1.0;
+ }
+}
+
+.new { 
+  -webkit-animation-name: pulse;
+  -webkit-animation-duration: 1.5s;
+  -webkit-animation-iteration-count: 3;
+  -webkit-animation-direction: alternate;
+}
+
+#stories .story p { margin: 0; padding: 0; white-space: normal;}
+#stories .story a:link, 
+#stories .story a:visited { color: #333; text-decoration: none;}
+#stories .story a:hover { text-decoration: underline; }
+
+

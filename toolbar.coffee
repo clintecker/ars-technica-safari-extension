@@ -125,9 +125,8 @@ ars = {
     if localStorage[key] then @decode localStorage[key] else null
       
   get_all: ()->
-    for key of localStorage
-      @get key
-  
+    @get key for key of localStorage
+     
   set: (key, value)->
     localStorage[key] = @encode value
         

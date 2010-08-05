@@ -1,0 +1,1 @@
+Author of this extension is Clint Ecker <me@clintecker.com> ©2010

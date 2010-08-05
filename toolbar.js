@@ -1,5 +1,6 @@
+var ars;
 var __hasProp = Object.prototype.hasOwnProperty;
-this.ars = {
+ars = {
   debug: false,
   feed_base: "http://feeds.arstechnica.com/arstechnica/",
   feed_url: null,
@@ -7,52 +8,74 @@ this.ars = {
   refresh_interval: 1000 * 60 * safari.extension.settings.refresh_interval,
   next_refresh: new Date(),
   log: function(msg) {
-    if (ars.debug) {
+    if (this.debug) {
       return console.log(msg);
     }
   },
-  settings_changed: function(event) {
-    var _a;
-    console.log(event);
-    if ((_a = event.key) === 'section') {
-      return ars.change_section(event.newValue);
-    } else if (_a === 'refresh_interval') {
-      return ars.change_interval(event.newValue);
-    }
-  },
   change_section: function(section) {
-    ars.feed_url = ars.feed_base + safari.extension.settings.section + '/';
-    ars.clear();
-    ars.refresh_data(true);
-    clearInterval(ars.timer);
-    ars.timer = setInterval(function() {
-      return ars.refresh_data(false);
-    }, ars.refresh_interval);
-    return ars.timer;
+    this.feed_url = this.feed_base + safari.extension.settings.section + '/';
+    this.clear();
+    this.refresh_data(true);
+    clearInterval(this.timer);
+    this.timer = setInterval(((function(__this) {
+      var __func = function() {
+        return this.refresh_data(false);
+      };
+      return (function() {
+        return __func.apply(__this, arguments);
+      });
+    })(this)), this.refresh_interval);
+    return null;
   },
   change_interval: function(minutes) {
     var d, n, refresher;
-    ars.refresh_interval = 1000 * 60 * minutes;
-    clearInterval(ars.timer);
-    ars.timer = setInterval(function() {
-      return ars.refresh_data(false);
-    }, ars.refresh_interval);
+    this.refresh_interval = 1000 * 60 * minutes;
+    clearInterval(this.timer);
+    this.timer = setInterval(((function(__this) {
+      var __func = function() {
+        return this.refresh_data(false);
+      };
+      return (function() {
+        return __func.apply(__this, arguments);
+      });
+    })(this)), this.refresh_interval);
     d = new Date();
-    n = new Date(d.getTime() + ars.refresh_interval);
-    ars.next_refresh = n;
+    n = new Date(d.getTime() + this.refresh_interval);
+    this.next_refresh = n;
     refresher = document.getElementById('refresh-link');
-    return refresher.setAttribute('title', ("Next update at: " + (ars.next_refresh)));
+    refresher.setAttribute('title', ("Next update at: " + (this.next_refresh)));
+    return null;
+  },
+  settings_changed: function(event) {
+    var _a;
+    if ((_a = event.key) === 'section') {
+      return this.change_section(event.newValue);
+    } else if (_a === 'refresh_interval') {
+      return this.change_interval(event.newValue);
+    }
   },
   init: function() {
     var refresher;
-    ars.log("Initilizing");
-    ars.feed_url = ars.feed_base + safari.extension.settings.section + '/';
-    ars.refresh_data(true);
-    ars.timer = setInterval(function() {
-      return ars.refresh_data(false);
-    }, ars.refresh_interval);
+    this.log("Initilizing");
+    this.feed_url = this.feed_base + safari.extension.settings.section + '/';
+    this.refresh_data(true);
+    this.timer = setInterval(((function(__this) {
+      var __func = function() {
+        return this.refresh_data(false);
+      };
+      return (function() {
+        return __func.apply(__this, arguments);
+      });
+    })(this)), this.refresh_interval);
     refresher = document.getElementById('refresh-link');
-    return refresher.addEventListener('click', ars.refresh_button);
+    return refresher.addEventListener('click', ((function(__this) {
+      var __func = function(e) {
+        return this.refresh_button(e);
+      };
+      return (function() {
+        return __func.apply(__this, arguments);
+      });
+    })(this)));
   },
   refresh_button: function(e) {
     e.target.className = 'new';
@@ -60,37 +83,52 @@ this.ars = {
       e.target.className = '';
       return e.target.className;
     });
-    ars.refresh_data();
-    clearInterval(ars.timer);
-    ars.timer = setInterval(function() {
-      return ars.refresh_data(false);
-    }, ars.refresh_interval);
+    this.refresh_data();
+    clearInterval(this.timer);
+    this.timer = setInterval(((function(__this) {
+      var __func = function() {
+        return this.refresh_data(false);
+      };
+      return (function() {
+        return __func.apply(__this, arguments);
+      });
+    })(this)), this.refresh_interval);
     return false;
   },
   refresh_data: function(animate) {
     var d, n, refresher;
     animate = animate || false;
-    if (!ars.feed_url) {
+    if (!this.feed_url) {
       return null;
     }
     d = new Date();
-    n = new Date(d.getTime() + ars.refresh_interval);
-    ars.next_refresh = n;
+    n = new Date(d.getTime() + this.refresh_interval);
+    this.next_refresh = n;
     refresher = document.getElementById('refresh-link');
-    refresher.setAttribute('title', ("Next update at: " + (ars.next_refresh)));
-    return ars.ajax({
-      url: ars.feed_url,
-      success: function(XMLData) {
-        return ars.store_articles(XMLData, function() {
-          return ars.refresh_bar(animate);
+    refresher.setAttribute('title', ("Next update at: " + (this.next_refresh)));
+    return this.ajax({
+      url: this.feed_url,
+      success: (function(__this) {
+        var __func = function(XMLData) {
+          return this.store_articles(XMLData, (function(__this) {
+            var __func = function() {
+              return this.refresh_bar(animate);
+            };
+            return (function() {
+              return __func.apply(__this, arguments);
+            });
+          })(this));
+        };
+        return (function() {
+          return __func.apply(__this, arguments);
         });
-      }
+      })(this)
     });
   },
   store_articles: function(XMLData, callback) {
     var _a, _b, _c, cached_item, date, guid, item, items, link, title;
     items = XMLData.getElementsByTagName('item');
-    ars.log(("Got " + (items.length) + " from RSS"));
+    this.log(("Got " + (items.length) + " from RSS"));
     _b = items;
     for (_a = 0, _c = _b.length; _a < _c; _a++) {
       item = _b[_a];
@@ -98,10 +136,10 @@ this.ars = {
       link = item.getElementsByTagName('link')[0].textContent;
       guid = item.getElementsByTagName('guid')[0].textContent;
       date = new Date(item.getElementsByTagName('pubDate')[0].textContent);
-      cached_item = ars.get(guid);
+      cached_item = this.get(guid);
       if (!(typeof cached_item !== "undefined" && cached_item !== null) || (cached_item.title !== title || cached_item.link !== link)) {
-        ars.log(("New or updated item: " + (title)));
-        ars.set(guid, {
+        this.log(("New or updated item: " + (title)));
+        this.set(guid, {
           title: title,
           link: link,
           date: date,
@@ -122,21 +160,26 @@ this.ars = {
     var _a, key, req;
     options = options || {};
     req = new XMLHttpRequest();
-    req.onload = function() {
-      var _a, _b, data;
-      if (req.status === 200 || req.status === 0) {
-        data = req.responseXML;
-        if ((typeof (_a = options.success) !== "undefined" && _a !== null)) {
-          return options.success(data);
+    req.onload = (function(__this) {
+      var __func = function() {
+        var _a, _b, data;
+        if (req.status === 200 || req.status === 0) {
+          data = req.responseXML;
+          if ((typeof (_a = options.success) !== "undefined" && _a !== null)) {
+            return options.success(data);
+          }
+        } else {
+          if ((typeof (_b = params.success) !== "undefined" && _b !== null)) {
+            return options.failure(req, req.statusText, req.responseText);
+          }
         }
-      } else {
-        if ((typeof (_b = params.success) !== "undefined" && _b !== null)) {
-          return options.failure(req, req.statusText, req.responseText);
-        }
-      }
-    };
+      };
+      return (function() {
+        return __func.apply(__this, arguments);
+      });
+    })(this);
     if (options.url) {
-      ars.log(("Requesting " + (options.url)));
+      this.log(("Requesting " + (options.url)));
       req.open('GET', options.url, true);
     } else {
       return null;
@@ -160,28 +203,25 @@ this.ars = {
     }
   },
   get: function(key) {
-    var raw;
-    raw = localStorage[key];
-    return raw ? ars.decode(localStorage[key]) : null;
+    return localStorage[key] ? this.decode(localStorage[key]) : null;
   },
   get_all: function() {
-    var _a, items, key;
-    items = [];
-    _a = localStorage;
-    for (key in _a) { if (__hasProp.call(_a, key)) {
-      items.push(ars.get(key));
+    var _a, _b, key;
+    _a = []; _b = localStorage;
+    for (key in _b) { if (__hasProp.call(_b, key)) {
+      _a.push(this.get(key));
     }}
-    return items;
+    return _a;
   },
   set: function(key, value) {
-    localStorage[key] = ars.encode(value);
-    return null;
+    localStorage[key] = this.encode(value);
+    return localStorage[key];
   },
   clear: function() {
     var _a, _b, key;
     _a = []; _b = localStorage;
     for (key in _b) { if (__hasProp.call(_b, key)) {
-      _a.push(delete (localStorage[key]));
+      _a.push(delete localStorage[key]);
     }}
     return _a;
   },
@@ -197,10 +237,10 @@ this.ars = {
   refresh_bar: function(animate) {
     var _a, _b, article, articles, c, i, max_items, num, stories_div, to_animate, width;
     animate = animate || false;
-    ars.log('refreshing the bar');
-    ars.clear_bar();
-    articles = ars.get_all();
-    articles.sort(ars.sort_by_date);
+    this.log('refreshing the bar');
+    this.clear_bar();
+    articles = this.get_all();
+    articles.sort(this.sort_by_date);
     width = document.body.clientWidth;
     max_items = Math.floor((width - 71) / 161);
     num = 0;
@@ -210,7 +250,7 @@ this.ars = {
 
     for (i = 0; i < _a; i += 1) {
       article = articles[i];
-      ars.log(("" + (article.title) + ": " + (article.read)));
+      this.log(("" + (article.title) + ": " + (article.read)));
       if (article.read === true) {
         continue;
       }
@@ -221,7 +261,7 @@ this.ars = {
       if (article['new'] === true) {
         c.className += ' new';
         article['new'] = false;
-        ars.set(article.guid, article);
+        this.set(article.guid, article);
       }
       c.innerHTML = ("<p><a href='" + (article.link) + "' data-guid='" + (article.guid) + "' class='story-link'>" + (article.title) + "</a></p>");
       stories_div.appendChild(c);
@@ -235,17 +275,22 @@ this.ars = {
 
       for (i = 0; i < _b; i += 1) {
         c = to_animate[i];
-        ars.animate_up(c, ((i * i) * 50) + 50);
+        this.animate_up(c, ((i * i) * 50) + 50);
       }
     }
-    ars.attach_link_handlers();
+    this.attach_link_handlers();
     return null;
   },
   animate_up: function(item, delay) {
-    return setTimeout(function() {
-      item.style.cssText = '-webkit-transition:-webkit-transform 0.6s;-webkit-transform:translate3d(0,0,0);';
-      return null;
-    }, delay);
+    return setTimeout(((function(__this) {
+      var __func = function() {
+        item.style.cssText = '-webkit-transition:-webkit-transform 0.6s;-webkit-transform:translate3d(0,0,0);';
+        return item.style.cssText;
+      };
+      return (function() {
+        return __func.apply(__this, arguments);
+      });
+    })(this)), delay);
   },
   remove_item: function(item) {
     var g, key, p, stored_item;
@@ -253,10 +298,10 @@ this.ars = {
     p = item.parentElement.parentElement;
     g = p.parentElement;
     g.removeChild(p);
-    stored_item = ars.get(key);
+    stored_item = this.get(key);
     stored_item.read = true;
-    ars.set(key, stored_item);
-    ars.refresh_bar(false);
+    this.set(key, stored_item);
+    this.refresh_bar(false);
     return null;
   },
   attach_link_handlers: function() {
@@ -266,14 +311,25 @@ this.ars = {
     for (_b = 0, _d = _c.length; _b < _d; _b++) {
       (function() {
         var link = _c[_b];
-        return _a.push(link.addEventListener('click', function(e) {
-          ars.remove_item(e.target);
-          return true;
-        }));
-      })();
+        return _a.push(link.addEventListener('click', ((function(__this) {
+          var __func = function(e) {
+            return this.remove_item(e.target);
+          };
+          return (function() {
+            return __func.apply(__this, arguments);
+          });
+        })(this)), true));
+      }).call(this);
     }
     return _a;
   }
 };
-safari.extension.settings.addEventListener("change", ars.settings_changed, false);
+safari.extension.settings.addEventListener("change", ((function(__this) {
+  var __func = function(e) {
+    return ars.settings_changed(e);
+  };
+  return (function() {
+    return __func.apply(__this, arguments);
+  });
+})(this)), false);
 ars.init();
